@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "license-plate-verification"
+version = "0.1.0"
+description = "Insurance Vehicle Plate Verification App using Streamlit, OpenCV, and OCR"
+authors = ["Umberto Altieri"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "=3.11.9"
+streamlit = "^1.26.0"
+opencv-python = "^4.8.0"
+numpy = "^1.24.0"
+pandas = "^2.0.0"
+pillow = "^10.0.0"
+paddleocr = "^2.6.0"
+ultralytics = "^8.0.0"
+paddlepaddle = "^2.6.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+app = "streamlit run app.py"
+
