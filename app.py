@@ -6,6 +6,9 @@ import numpy as np
 import re
 from PIL import Image
 import datetime
+import os, pathlib, requests, streamlit as st
+from detector import PlateDetector
+from verifier import PlateOCRVerifier
 
 
 # Set up temporary directories
@@ -35,21 +38,24 @@ st.set_page_config(
 # [CSS styling code remains the same]
 
 # Initialize detection and OCR models
-@st.cache_resource
+
+@st.cache_resource(show_spinner="Loading YOLO and OCR models…")
 def load_models():
-    yolo_model_path = "models/yolo/best-seg-n-640-16epochs.pt"
+    out_path = pathlib.Path("/tmp/yolo_weights.pt")
+    if not out_path.exists():
+        url = st.secrets["WEIGHTS_RAW_URL"]
+        headers = {"Authorization": f"Bearer {st.secrets['GITHUB_TOKEN']}"}
+        st.info("Downloading YOLO weights from private repo…")
+        r = requests.get(url, headers=headers, timeout=600)
+        r.raise_for_status()
+        out_path.write_bytes(r.content)
 
-    if not os.path.exists(yolo_model_path):
-        st.warning(f"YOLO model not found at {yolo_model_path}. Using mock detector.")
-        return None, PlateOCRVerifier()
-
-    detector = PlateDetector(yolo_model_path)
+    detector = PlateDetector(str(out_path))
     verifier = PlateOCRVerifier()
-
     return detector, verifier
 
-
 detector, verifier = load_models()
+
 
 
 def collect_user_input():
