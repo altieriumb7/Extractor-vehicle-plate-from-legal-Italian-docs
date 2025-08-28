@@ -95,10 +95,4 @@ You can adjust the following parameters in the code:
 - Text similarity thresholds for matching
 - Image preprocessing parameters
 
-## License
 
-Reply
-
-## Contact
-
-u.altieri@reply.it
