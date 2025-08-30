@@ -1,10 +1,13 @@
-
+# utils_paths.py
 from pathlib import Path
 import tempfile
 import shutil
 
 def get_runtime_dirs(session_state) -> dict:
-    """Create per-session temp dirs under /tmp (or system temp)."""
+    """
+    Create per-session temp dirs under the system temp folder.
+    Returns a dict with keys: base, uploaded, plates.
+    """
     if "rt_dirs" not in session_state:
         base = Path(tempfile.mkdtemp(prefix="veh-plate-"))
         up = base / "uploaded"
@@ -15,11 +18,18 @@ def get_runtime_dirs(session_state) -> dict:
     return session_state["rt_dirs"]
 
 def cleanup_runtime_dirs(session_state):
+    """Remove the whole per-session workspace."""
     d = session_state.get("rt_dirs")
     if d:
         shutil.rmtree(d["base"], ignore_errors=True)
         session_state.pop("rt_dirs", None)
 
 def models_root(app_file: Path) -> Path:
-    """Read-only models live inside the repo and can be read just fine."""
+    """
+    Read-only models live inside the repo and can be read just fine.
+    Example expected layout:
+      models/
+        yolo/best.pt
+        paddleOCR/...
+    """
     return app_file.parent / "models"
