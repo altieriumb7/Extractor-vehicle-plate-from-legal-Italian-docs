@@ -98,10 +98,14 @@ def collect_user_input():
     with col2:
         # Image upload with consistent styling
         st.markdown("<p><strong>Upload Vehicle Document:</strong></p>", unsafe_allow_html=True)
-        uploaded_file = st.file_uploader("",
-                                         type=["jpg", "jpeg", "png"],
-                                         key="plate_image_upload",
-                                         label_visibility="collapsed")
+        uploaded = st.file_uploader("Upload document/image", type=["png","jpg","jpeg","pdf"])
+        if uploaded:
+            suffix = Path(uploaded.name).suffix or ".bin"
+            tmp_path = (UPLOAD_DIR / f"upload{suffix}")
+            with open(tmp_path, "wb") as f:
+                f.write(uploaded.getbuffer())
+            # pass tmp_path to your detection/OCR pipeline
+
 
     # Close the card
     st.markdown('</div>', unsafe_allow_html=True)
