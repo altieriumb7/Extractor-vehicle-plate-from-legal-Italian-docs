@@ -53,24 +53,45 @@ if "verification_stage" not in st.session_state:
 @st.cache_resource(show_spinner="Loading YOLO and OCR models…")
 def load_models():
     """
-    - Pull YOLO weights from a private URL (via GitHub token from st.secrets).
-    - Store them in system temp (read+write allowed).
-    - Instantiate your detector and OCR verifier.
+    - Prefer downloading YOLO weights from a private URL (via GITHUB_TOKEN in st.secrets).
+    - Fallback to a local weights file at models/yolo/best.pt if secrets are not available.
+    - Store remote weights in /tmp (read+write allowed).
     """
+    # Fallback local weights
+    local_weights = MODELS_DIR / "yolo" / "best.pt"
+
+    # Remote weights path in temp
     out_path = Path("/tmp/yolo_weights.pt")
-    if not out_path.exists():
-        if "WEIGHTS_RAW_URL" not in st.secrets or "GITHUB_TOKEN" not in st.secrets:
-            st.error("Missing WEIGHTS_RAW_URL or GITHUB_TOKEN in Streamlit secrets.")
-            st.stop()
 
-        url = st.secrets["WEIGHTS_RAW_URL"]
-        headers = {"Authorization": f"Bearer {st.secrets['GITHUB_TOKEN']}"}
-        st.info("Downloading YOLO weights from private repo…")
-        r = requests.get(url, headers=headers, timeout=600)
-        r.raise_for_status()
-        out_path.write_bytes(r.content)
+    have_secrets = "WEIGHTS_RAW_URL" in st.secrets and "GITHUB_TOKEN" in st.secrets
 
-    detector = PlateDetector(str(out_path))  # your class should accept path to weights
+    if have_secrets:
+        if not out_path.exists():
+            try:
+                url = st.secrets["WEIGHTS_RAW_URL"]
+                headers = {"Authorization": f"Bearer {st.secrets['GITHUB_TOKEN']}"}
+                st.info("Downloading YOLO weights from private repo…")
+                r = requests.get(url, headers=headers, timeout=600)
+                r.raise_for_status()
+                out_path.write_bytes(r.content)
+            except Exception as e:
+                st.warning(f"Remote weights download failed: {e}. Trying local weights…")
+
+    # Decide which path to use
+    weights_path = None
+    if out_path.exists():
+        weights_path = out_path
+    elif local_weights.exists():
+        weights_path = local_weights
+    else:
+        st.error(
+            "No YOLO weights found. Provide either:\n"
+            " - Streamlit secrets WEIGHTS_RAW_URL + GITHUB_TOKEN, or\n"
+            f" - A local weights file at: {local_weights}"
+        )
+        st.stop()
+
+    detector = PlateDetector(str(weights_path))
     verifier = PlateOCRVerifier()
     return detector, verifier
 
