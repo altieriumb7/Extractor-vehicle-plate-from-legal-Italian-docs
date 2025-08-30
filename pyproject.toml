@@ -19,8 +19,9 @@ pillow = ">=10,<11"
 
 # DL & OCR
 # Explicit Torch pins keep ultralytics happy and compatible with Py3.11
-torch = ">=2.0,<2.3"
-torchvision = ">=0.15,<0.18"
+torch = "==2.2.2"
+torchvision = "==0.17.2"
+
 ultralytics = ">=8.0,<8.2"
 # Paddle is finicky; allow both 2.5.x and 2.6.x but block future majors
 paddlepaddle = ">=2.5,<2.7"
