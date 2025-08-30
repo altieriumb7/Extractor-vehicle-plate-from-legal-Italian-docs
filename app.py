@@ -9,11 +9,21 @@ import datetime
 import os, pathlib, requests, streamlit as st
 from detector import PlateDetector
 from verifier import PlateOCRVerifier
+from pathlib import Path
+import streamlit as st
+from utils_paths import get_runtime_dirs, cleanup_runtime_dirs, models_root
 
+APP_DIR = Path(__file__).parent
+DIRS = get_runtime_dirs(st.session_state)  # {'uploaded': Path(...), 'plates': Path(...)}
+
+# optional convenience:
+UPLOAD_DIR = DIRS["uploaded"]
+PLATES_DIR = DIRS["plates"]
+MODELS_DIR = models_root(APP_DIR)
 
 # Set up temporary directories
-temp_uploaded_dir = "temp_uploaded"
-temp_plate_extracted_dir = "temp_plate_extracted"
+temp_uploaded_dir = UPLOAD_DIR
+temp_plate_extracted_dir = PLATES_DIR
 
 # Create directories if they don't exist
 os.makedirs(temp_uploaded_dir, exist_ok=True)
