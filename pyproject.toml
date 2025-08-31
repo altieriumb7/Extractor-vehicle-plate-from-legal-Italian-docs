@@ -11,23 +11,19 @@ python = ">=3.11,<3.12"
 
 # Core
 streamlit = ">=1.26,<2.0"
-# Prefer headless on servers/CI; swap to opencv-python if you truly need GUI windows
 opencv-python-headless = ">=4.7,<5.0"
 numpy = ">=1.24,<2.0"
 pandas = ">=2.0,<2.2"
 pillow = ">=10,<11"
 
 # DL & OCR
-# Explicit Torch pins keep ultralytics happy and compatible with Py3.11
 torch = "==2.2.2"
 torchvision = "==0.17.2"
-
 ultralytics = ">=8.0,<8.2"
-# Paddle is finicky; allow both 2.5.x and 2.6.x but block future majors
-paddlepaddle = ">=2.5,<2.7"
+paddlepaddle = "==2.6.1"
 paddleocr = ">=2.6,<2.7"
 
-# (Optional) Utils you likely use; keep them flexible but safe
+# Optional utilities
 # tqdm = ">=4.65,<5.0"
 # python-Levenshtein = ">=0.21,<0.26"
 # matplotlib = ">=3.7,<3.9"
@@ -37,8 +33,9 @@ paddleocr = ">=2.6,<2.7"
 pytest = ">=7,<9"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.7.0"]
 build-backend = "poetry.core.masonry.api"
 
+# Optional wrapper entrypoint
 [tool.poetry.scripts]
-app = "streamlit run app.py"
+app = "app:main"
