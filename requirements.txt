@@ -1,18 +1,16 @@
-# --- Streamlit Cloud requirements ---
-# Pin heavy libs to tested combos for Python 3.11
 streamlit>=1.28,<2.0
-
-# Core CV/data
-opencv-python-headless>=4,<5.0
 numpy>=1.24,<2.0
 pandas>=2.0,<3.0
 pillow>=10
 
-# DL & detection
+# YOLO + OpenCV
+ultralytics==8.3.190
+opencv-python-headless==4.12.0.88
+
+# DL
 torch==2.2.2
 torchvision==0.17.2
-ultralytics>=8.0,<9.0
 
-# OCR
-paddlepaddle==2.6.1     # CPU build
-paddleocr>=2.6,<2.7
+# Paddle stack (NO PyMuPDF)
+paddlepaddle==2.6.1
+paddleocr>=3.2,<3.3
