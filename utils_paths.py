@@ -3,6 +3,22 @@ from pathlib import Path
 import tempfile
 import shutil
 
+import os, tempfile, urllib.request
+
+def ensure_file(url: str, dst_path: str) -> str:
+    os.makedirs(os.path.dirname(dst_path), exist_ok=True)
+    if not os.path.exists(dst_path) or os.path.getsize(dst_path) == 0:
+        with urllib.request.urlopen(url) as r, open(dst_path, "wb") as f:
+            f.write(r.read())
+    return dst_path
+
+def app_tmp_dir(*parts: str) -> str:
+    base = os.path.join(tempfile.gettempdir(), "lpv_app")
+    p = os.path.join(base, *parts)
+    os.makedirs(p, exist_ok=True)
+    return p
+
+
 def get_runtime_dirs(session_state) -> dict:
     """
     Create per-session temp dirs under the system temp folder.
