@@ -14,7 +14,6 @@ import pathlib
 from pathlib import Path
 import datetime
 
-import cv2
 import numpy as np
 from PIL import Image
 import requests
