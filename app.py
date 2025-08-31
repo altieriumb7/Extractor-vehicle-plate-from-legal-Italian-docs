@@ -20,7 +20,7 @@ import requests
 
 # --- Local modules ---
 # Keep a single, consistent import source for your classes
-from detector import PlateDetector           # <-- your repo's module
+from plate_detection import PlateDetector           # <-- your repo's module
 from verifier import PlateOCRVerifier       # <-- your repo's module
 
 # Use the temp-dir utilities (no writes into the repo!)
