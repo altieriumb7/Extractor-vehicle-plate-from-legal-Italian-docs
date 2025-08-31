@@ -4,7 +4,23 @@ import os
 from ultralytics import YOLO
 import tempfile
 
+import os
+from ultralytics import YOLO
+from utils_bootstrap import ensure_file
 
+DEFAULT_YOLO_URL = os.getenv(
+    "YOLO_WEIGHTS_URL",
+    "https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n-seg.pt",
+)
+DEFAULT_YOLO_PATH = os.getenv(
+    "YOLO_WEIGHTS_PATH",
+    os.path.expanduser("~/.cache/lpv/yolov8n-seg.pt"),
+)
+
+def load_yolo(weights_path: str | None = None):
+    path = weights_path or ensure_file(DEFAULT_YOLO_URL, DEFAULT_YOLO_PATH)
+    return YOLO(path)
+    
 class PlateDetector:
     def __init__(self, model_path):
         """
@@ -15,6 +31,12 @@ class PlateDetector:
         """
 
         self.model = YOLO(model_path).eval()
+
+
+
+def load_yolo(weights_path: str | None = None):
+    path = weights_path or ensure_file(DEFAULT_YOLO_URL, DEFAULT_YOLO_PATH)
+    return YOLO(path)
 
     def detect_and_extract_plates(self, image, output_folder=None):
         """
