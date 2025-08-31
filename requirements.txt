@@ -11,9 +11,9 @@ torchvision==0.17.2
 
 # YOLO + OpenCV
 ultralytics==8.3.190
-# Headless only; keep this AFTER ultralytics so its files win over opencv-python
+# keep headless only and list it AFTER ultralytics so its files win
 opencv-python-headless==4.12.0.88
 
-# Paddle stack (no PyMuPDF)
+# Paddle stack (no PyMuPDF build)
 paddlepaddle==2.6.1
 paddleocr>=3.2,<3.3
