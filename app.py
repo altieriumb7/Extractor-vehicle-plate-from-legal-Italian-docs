@@ -7,7 +7,7 @@ st.set_page_config(
     page_icon="🔒",
     layout="wide"
 )
-
+import cv2
 # --- Stdlib / third-party imports ---
 import os
 import pathlib
