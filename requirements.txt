@@ -1,10 +1,19 @@
+# Streamlit
 streamlit>=1.28,<2.0
+
+# Core data stack (NumPy 2 ABI to match OpenCV 4.12 wheels)
 numpy>=2.0,<2.3
 pandas>=2.2,<3.0
 pillow>=10
+
+# Deep learning
 torch==2.2.2
 torchvision==0.17.2
+
+# YOLO + OpenCV (headless only; keep AFTER ultralytics so its cv2 wins)
 ultralytics==8.3.190
 opencv-python-headless==4.12.0.88
+
+# Paddle OCR stack (no PyMuPDF build)
 paddlepaddle==2.6.1
 paddleocr>=3.2,<3.3
