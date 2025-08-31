@@ -1,10 +1,18 @@
-streamlit>=1.28
-ultralytics>=8.0.0
-torch>=2.2
-torchvision>=0.17
-opencv-python-headless>=4.7
-numpy>=1.24
-pandas>=2.0
-pillow>=10.0
-paddlepaddle>=2.6
-paddleocr>=2.6
+# --- Streamlit Cloud requirements ---
+# Pin heavy libs to tested combos for Python 3.11
+streamlit>=1.28,<2.0
+
+# Core CV/data
+opencv-python-headless>=4.7,<5.0
+numpy>=1.24,<2.0
+pandas>=2.0,<3.0
+pillow>=10
+
+# DL & detection
+torch==2.2.2
+torchvision==0.17.2
+ultralytics>=8.0,<9.0
+
+# OCR
+paddlepaddle==2.6.1     # CPU build
+paddleocr>=2.6,<2.7
