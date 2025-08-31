@@ -6,35 +6,25 @@ authors = ["Umberto Altieri"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-# Keep to 3.11.x — avoids manylinux / wheel gaps you’ll hit on 3.12
+# Keep Python on 3.11.x for best wheel coverage
 python = ">=3.11,<3.12"
 
 # Core
-streamlit = ">=1.26,<2.0"
-# Prefer headless on servers/CI; swap to opencv-python if you truly need GUI windows
-opencv-python-headless = ">=4.7,<5.0"
-numpy = ">=1.24,<2.0"
-pandas = ">=2.0,<2.2"
-pillow = ">=10,<11"
+streamlit = ">=1.26.0"
+opencv-python-headless = ">=4.7.0"
+numpy = ">=1.24.0"
+pandas = ">=2.0.0"
+pillow = ">=10.0.0"
 
 # DL & OCR
-# Explicit Torch pins keep ultralytics happy and compatible with Py3.11
-torch = "==2.2.2"
-torchvision = "==0.17.2"
-
-ultralytics = ">=8.0,<8.2"
-# Paddle is finicky; allow both 2.5.x and 2.6.x but block future majors
-paddlepaddle = ">=2.5,<2.7"
-paddleocr = ">=2.6,<2.7"
-
-# (Optional) Utils you likely use; keep them flexible but safe
-# tqdm = ">=4.65,<5.0"
-# python-Levenshtein = ">=0.21,<0.26"
-# matplotlib = ">=3.7,<3.9"
-# scipy = ">=1.11,<1.12"
+torch = ">=2.2.0"
+torchvision = ">=0.17.0"
+ultralytics = ">=8.0.0"
+paddlepaddle = ">=2.6.0"
+paddleocr = ">=2.6.0"
 
 [tool.poetry.group.dev.dependencies]
-pytest = ">=7,<9"
+pytest = ">=7.3.0"
 
 [build-system]
 requires = ["poetry-core>=1.7.0"]
