@@ -1,19 +1,10 @@
 streamlit>=1.28,<2.0
-
-# Core data stack (NumPy 2 ABI)
 numpy>=2.0,<2.3
 pandas>=2.2,<3.0
 pillow>=10
-
-# DL
 torch==2.2.2
 torchvision==0.17.2
-
-# YOLO + OpenCV
 ultralytics==8.3.190
-# keep headless only and list it AFTER ultralytics so its files win
 opencv-python-headless==4.12.0.88
-
-# Paddle stack (no PyMuPDF build)
 paddlepaddle==2.6.1
 paddleocr>=3.2,<3.3
